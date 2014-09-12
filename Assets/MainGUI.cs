@@ -25,9 +25,12 @@ public class MainGUI : MonoBehaviour {
 #if UNITY_EDITOR
 			Application.OpenURL("http://www.google.co.jp/");
 #elif UNITY_ANDROID
-			WebViewPlugins.LaunchWebView(this.name);
+			AndroidJavaClass c =
+				new AndroidJavaClass("com.example.webview.WebViewActivity");
+			c.CallStatic("startActivity", name);
 #endif
 		}
+
 		if (this.loadedUrl != null)
 		{
 			GUI.Label(new Rect(10, 10, Screen.width - 10, 100), this.loadedUrl);

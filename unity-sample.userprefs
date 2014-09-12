@@ -1,0 +1,14 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Plugins\WebViewPlugin.cs">
+    <Files>
+      <File FileName="Assets\MainGUI.cs" Line="33" Column="52" />
+      <File FileName="Assets\Plugins\Android\AndroidManifest.xml" Line="11" Column="2" />
+      <File FileName="Assets\Plugins\WebViewPlugin.cs" Line="11" Column="41" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

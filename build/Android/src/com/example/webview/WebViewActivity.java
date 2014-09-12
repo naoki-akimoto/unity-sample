@@ -26,8 +26,7 @@ public class WebViewActivity extends Activity {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         LinearLayout layout = new LinearLayout(this);
@@ -49,7 +48,8 @@ public class WebViewActivity extends Activity {
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView webView, String url) {
-            	if (!url.startsWith("http://www.google.co.jp/")) {
+            	if (!url.startsWith("http://www.google.co.jp/") &&
+            			!url.startsWith("https://www.google.co.jp/")) {
             		UnityPlayer.UnitySendMessage(GameObjectName, "OnPageLoaded", url);
             		finish();
             	}

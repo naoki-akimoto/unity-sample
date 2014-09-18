@@ -1,9 +1,8 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\MainGUI.cs">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="..\others\unity-webview-integration\unity\Assets\Scripts\TestInterface.js">
     <Files>
-      <File FileName="Assets\Plugins\Android\AndroidManifest.xml" Line="44" Column="1" />
-      <File FileName="Assets\MainGUI.cs" Line="33" Column="1" />
+      <File FileName="..\others\unity-webview-integration\unity\Assets\Scripts\TestInterface.js" Line="12" Column="50" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

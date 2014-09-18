@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class MainGUI : MonoBehaviour {
@@ -26,8 +26,8 @@ public class MainGUI : MonoBehaviour {
 			Application.OpenURL("http://www.google.co.jp/");
 #elif UNITY_ANDROID
 			AndroidJavaClass c =
-				new AndroidJavaClass("com.example.webview.WebViewActivity");
-			c.CallStatic("startActivity", name);
+				new AndroidJavaClass("com.example.webview.WebViewDialog");
+			c.CallStatic("showDialog", name);
 #endif
 		}
 

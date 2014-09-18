@@ -3,6 +3,8 @@ package com.example.webview;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.net.Uri;
+import android.webkit.CookieManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -11,9 +13,13 @@ import com.unity3d.player.UnityPlayer;
 
 public class WebViewDialog {
 
-    private static String GameObjectName;
+    private static final String AuthURL = "https://api.smt.docomo.ne.jp/cgi11d/authorization";
+    private static final String RedirectURL = "https://127.0.0.1/";
 
-    public static void showDialog(String name) {
+    private static String GameObjectName;
+    private static AlertDialog CurrentDialog;
+
+    public static void showDialog(String name, final String clientId) {
         GameObjectName = name;
 
         final Activity current = UnityPlayer.currentActivity;
@@ -30,13 +36,31 @@ public class WebViewDialog {
                     public void onPageFinished(WebView target, String url) {
                         target.setFocusable(true);
                         target.setFocusableInTouchMode(true);
-                        if (!url.startsWith("http://www.google.co.jp/") &&
-                                !url.startsWith("https://www.google.co.jp/")) {
+
+                        if (isRedirectUri(RedirectURL, url)) {
                             UnityPlayer.UnitySendMessage(GameObjectName, "OnPageLoaded", url);
+                            CookieManager.getInstance().removeSessionCookie();
+                            if (CurrentDialog != null) {
+                                CurrentDialog.cancel();
+                                CurrentDialog = null;
+                            }
                         }
                     }
+
+                    private boolean isRedirectUri(String redirectUrl, String url) {
+                    	Uri redirectUri = Uri.parse(redirectUrl);
+                    	Uri uri = Uri.parse(url);
+                        if (!redirectUri.getScheme().equals(uri.getScheme())) {
+                            return false;
+                        } else if (!redirectUri.getHost().equals(uri.getHost())) {
+                            return false;
+                        } else if (!redirectUri.getPath().equals(uri.getPath())) {
+                            return false;
+                        }
+                        return true;
+                    }
                 });
-                webView.loadUrl("http://www.google.co.jp/");
+                webView.loadUrl(generateUrl(AuthURL, clientId, RedirectURL));
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(current);
                 builder.setView(webView);
@@ -44,8 +68,24 @@ public class WebViewDialog {
                     public void onClick(DialogInterface dialog, int which) {
                     }
                 });
-                builder.show().setCanceledOnTouchOutside(false);
+                CurrentDialog = builder.show();
+                CurrentDialog.setCanceledOnTouchOutside(false);
             }
         });
+    }
+
+    private static String generateUrl(
+            String authURL,
+            String clientId,
+            String redirectUri)
+    {
+        StringBuilder builder = new StringBuilder();
+        builder.append(authURL).append("?");
+        builder.append("client_id=").append(clientId).append("&");
+        builder.append("response_type=code&");
+        builder.append("redirect_uri=").append(redirectUri).append("&");
+        builder.append("scope=").append("PhotoGetContent").append("&");
+        builder.append("state=").append(Long.toString(System.currentTimeMillis()));
+        return builder.toString();
     }
 }

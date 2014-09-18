@@ -27,7 +27,7 @@ public class MainGUI : MonoBehaviour {
 #elif UNITY_ANDROID
 			AndroidJavaClass c =
 				new AndroidJavaClass("com.example.webview.WebViewDialog");
-			c.CallStatic("showDialog", name);
+			c.CallStatic("showDialog", name, "Your Client ID");
 #endif
 		}
 

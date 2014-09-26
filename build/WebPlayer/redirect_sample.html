@@ -1,0 +1,26 @@
+<html>
+    <head >
+        <script type="text/javascript">
+            function addOnload(func) { 
+                try { 
+                    window.addEventListener("load", func, false); 
+                } catch (e) { 
+                    // IE 9以下用 
+                    window.attachEvent("onload", func); 
+                } 
+            } 
+            addOnload( function () {
+                if (window.opener != null) {
+                    window.opener.postMessage(window.location.href,
+			"http://localhost/WebPlayer.html");
+                    window.close();
+                } else {
+		    alert ( "opener is null" );
+		}
+            } );
+        </script>
+    </head>
+    <body>
+	<h1>It works!</h1>
+    </body>
+</html>

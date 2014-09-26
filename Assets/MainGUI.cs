@@ -1,5 +1,6 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
+using System;
 
 public class MainGUI : MonoBehaviour {
 	string loadedUrl;
@@ -28,6 +29,21 @@ public class MainGUI : MonoBehaviour {
 			AndroidJavaClass c =
 				new AndroidJavaClass("com.example.webview.WebViewActivity");
 			c.CallStatic("startActivity", name);
+#elif UNITY_WEBPLAYER
+			string url = "https://api.smt.docomo.ne.jp/cgi11d/authorization?"
+				+ "client_id=Your_Client_ID&"
+				+ "response_type=code&"
+				+ "redirect_uri=https://127.0.0.1/&"
+				+ "scope=PhotoGetContent&"
+				+ "state=" + (DateTime.Now.Ticks / 10000);
+			string js = "window.open('" + url + "', null, 'width=640,height=480,scrollbars=yes');"
+				+ "function onFromSub( event ) {"
+				+ "    alert ( 'onFromSub: ' + event.data );"
+				+ "    u.getUnity().SendMessage('GameObject', 'OnPageLoaded', event.data);"
+				+ "    window.removeEventListener('message', onFromSub, false);"
+				+ "}"
+				+ "window.addEventListener('message', onFromSub, false);";
+			Application.ExternalEval(js);
 #endif
 		}
 
@@ -37,10 +53,8 @@ public class MainGUI : MonoBehaviour {
 		}
 	}
 
-#if UNITY_ANDROID
 	public void OnPageLoaded(string url)
 	{
 		this.loadedUrl = url;
 	}
-#endif
 }
